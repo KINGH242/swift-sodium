@@ -29,11 +29,14 @@ let package = Package(
             name: "Sodium",
             targets: ["Sodium"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/norio-nomura/Base32.git", from: "0.9.0")
+    ],
     targets: [
         clibsodiumTarget,
         .target(
             name: "Sodium",
-            dependencies: ["Clibsodium"],
+            dependencies: ["Clibsodium", "Base32"],
             path: "Sodium",
             exclude: ["libsodium", "Info.plist"]),
         .testTarget(

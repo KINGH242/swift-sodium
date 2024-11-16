@@ -197,3 +197,48 @@ extension Utils {
         return ()
     }
 }
+
+class EncryptedMessage {
+    private var data: Data
+    private var _nonce: Data
+    private var _ciphertext: Data
+
+    private init(data: Data, nonce: Data, ciphertext: Data) {
+        self.data = data
+        self._nonce = nonce
+        self._ciphertext = ciphertext
+    }
+
+    static func fromParts(nonce: Data, ciphertext: Data, combined: Data) -> EncryptedMessage {
+        return EncryptedMessage(data: combined, nonce: nonce, ciphertext: ciphertext)
+    }
+
+    var nonce: Data {
+        return _nonce
+    }
+
+    var ciphertext: Data {
+        return _ciphertext
+    }
+
+    func toData() -> Data {
+        return data
+    }
+}
+
+class StringFixer {
+    static func string(from data: Data) -> String {
+        return String(data: data, encoding: .ascii) ?? ""
+    }
+}
+
+func bytesAsString(_ bytes: Data) -> String {
+    return String(data: bytes, encoding: .ascii) ?? ""
+}
+
+func random(size: Int = 32) -> Data {
+    var bytes = [UInt8](repeating: 0, count: size)
+    let result = SecRandomCopyBytes(kSecRandomDefault, size, &bytes)
+    assert(result == errSecSuccess)
+    return Data(bytes)
+}

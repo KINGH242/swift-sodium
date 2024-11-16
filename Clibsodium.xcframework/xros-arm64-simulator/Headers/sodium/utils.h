@@ -134,7 +134,7 @@ int sodium_munlock(void * const addr, const size_t len)
  * either 357 or 361 bytes. For this reason, when using sodium_malloc() to
  * allocate a crypto_generichash_state structure, padding must be added in
  * order to ensure proper alignment. crypto_generichash_statebytes()
- * returns the rounded up structure size, and should be preferred to sizeof():
+ * returns the rounded up structure size, and should be prefered to sizeof():
  * state = sodium_malloc(crypto_generichash_statebytes());
  */
 
@@ -157,6 +157,12 @@ int sodium_mprotect_readonly(void *ptr) __attribute__ ((nonnull));
 
 SODIUM_EXPORT
 int sodium_mprotect_readwrite(void *ptr) __attribute__ ((nonnull));
+
+SODIUM_EXPORT
+int sodium_mshield(void *ptr) __attribute__ ((nonnull));
+
+SODIUM_EXPORT
+int sodium_munshield(void *ptr) __attribute__ ((nonnull));
 
 SODIUM_EXPORT
 int sodium_pad(size_t *padded_buflen_p, unsigned char *buf,
